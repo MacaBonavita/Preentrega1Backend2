@@ -1,0 +1,719 @@
+@import url('https://fonts.googleapis.com/css2?family=Metal+Mania&family=Roboto:wght@300;400;700&display=swap');
+
+:root {
+    --primary-color: #ff4136;
+    --secondary-color: #1a1a1a;
+    --text-color: #ffffff;
+    --accent-color: #ffd700;
+    --background-color: #121212;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    /* Quita el subrayado */
+    color: inherit;
+    /* Mantiene el color del texto del entorno, elimina el color violeta por defecto */
+}
+
+a:visited {
+    color: inherit;
+    /* Evita que los enlaces visitados se pongan en violeta */
+}
+
+a:hover {
+    color: inherit;
+    /* Mantiene el color al pasar el cursor sobre el enlace */
+    text-decoration: none;
+    /* Asegura que no aparezca subrayado al pasar el cursor */
+}
+
+/*
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+
+}
+
+body {
+    background: url('/img/rock-background.png') no-repeat center center;
+    background-size: cover;
+    
+    margin: 0;
+    padding-top: [altura-del-header];
+
+    padding-bottom: [altura-del-footer];
+
+    overflow-x: hidden;
+
+}
+
+html,
+body {
+    height: 100%;
+
+}
+header {
+    background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+footer {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 2rem 0;
+    margin-top: 2%;
+}
+
+.tituloLog {
+    font-family: 'Metal Mania', cursive;
+    font-size: 4.5rem;
+    color: #000000;
+    text-align: center;
+    margin-bottom: -1%;
+    margin-top: 2%;
+    text-shadow: 0 0 10px var(--primary-color);
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+*/
+
+/* Ajustes generales */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Estilos para el fondo fijo */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/img/rock-background.png') no-repeat center center;
+    background-size: cover;
+    z-index: -1;
+}
+
+/* Ajustes para el header */
+header {
+    background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Ajustes para el contenido principal */
+main {
+    flex: 1 0 auto;
+    padding: 2rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* Ajustes para el footer */
+footer {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 2rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+/* Asegurarse de que el contenido sea legible sobre el fondo */
+.home-container,
+.product-grid,
+.auth-container,
+.rock-session-container {
+    background-color: rgba(18, 18, 18, 0);
+    /* Fondo semi-transparente */
+    padding: 2rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
+}
+
+/* Ajuste para el título principal */
+.tituloLog {
+    font-family: 'Metal Mania', cursive;
+    font-size: 4.5rem;
+    color: #040404;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px var(--secondary-color), 0 0 10px var(--primary-color);
+    animation: glow 1s ease-in-out infinite alternate;
+}
+
+
+
+/* Mantener los estilos existentes para otros elementos... */
+
+/* Ajustes adicionales para mejorar la legibilidad */
+.product-card,
+.guitar-type-card {
+    background: rgba(26, 26, 26, 0.9);
+}
+
+.cta-section {
+    background: linear-gradient(45deg, rgba(255, 65, 54, 0.9), rgba(26, 26, 26, 0.9));
+}
+
+/* Asegurarse de que los botones y enlaces sean visibles */
+.btn,
+nav ul li a {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.main-content {
+    min-height: calc(100vh - [altura-del-header] - [altura-del-footer]);
+    /* Calcula el espacio disponible */
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Header styles */
+
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.logo img {
+    height: 60px;
+    filter: drop-shadow(0 0 5px var(--accent-color));
+}
+
+nav ul {
+    display: flex;
+    list-style-type: none;
+}
+
+nav ul li {
+    margin-left: 1.5rem;
+}
+
+nav ul li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--accent-color);
+    text-shadow: 0 0 10px var(--accent-color);
+}
+
+/* Main content styles */
+/* main {
+    padding: 2rem 0;
+} */
+
+/* .tituloLog {
+    font-family: 'Metal Mania', cursive;
+    font-size: 4.5rem;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: -1%;
+    margin-top: 2%;
+    text-shadow: 2px 2px 4px var(--secondary-color);
+} */
+
+
+
+/* Product grid */
+
+
+.product-card {
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(255, 65, 54, 0.3);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.product-info {
+    padding: 1rem;
+}
+
+.product-card h3 {
+    font-family: 'Metal Mania', cursive;
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+}
+
+.product-card .price {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.product-card .description {
+    font-size: 0.9rem;
+    color: #cccccc;
+    margin-bottom: 1rem;
+}
+
+/* Buttons */
+.btn {
+    margin: 1rem;
+    padding: 1rem;
+    display: inline-block;
+    /* padding: 3.5px 11px; */
+    font-size: leg;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 5px;
+    /* margin-top: 27px; */
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    transform: scale(1.05);
+}
+
+
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.footer-logo img {
+    height: 40px;
+}
+
+.footer-links a,
+.social-media a {
+    color: var(--text-color);
+    text-decoration: none;
+    margin-right: 1rem;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover,
+.social-media a:hover {
+    color: var(--primary-color);
+}
+
+.copyright {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #888888;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+    }
+
+    nav ul {
+        margin-top: 1rem;
+    }
+
+    nav ul li {
+        margin: 0 0.5rem;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+/* Animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.btn-primary {
+    animation: pulse 2s infinite;
+}
+
+/* config extra*/
+.subCont {
+    display: flex;
+    margin: 10px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contenedorProd {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.btn-remove {
+    margin-bottom: 37px;
+}
+
+.cart-item-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.linea {
+    width: 94vw;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.auth-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #00000061;
+    margin-left: 36%;
+    margin-right: 36%;
+    margin-top: 5%;
+    border: 2px dotted #ff000042;
+}
+
+.marginBot1rem {
+    margin-bottom: 1rem;
+}
+
+/*Estilos para Home.Handlebars y /current */
+
+/* Estilos para home.handlebars */
+.home-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    /* padding: 2rem; */
+}
+
+.featured-brands,
+.guitar-types,
+.cta-section {
+    margin-bottom: 4rem;
+}
+
+.brand-logos {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    color: white;
+}
+
+.brand-logo {
+    max-width: 150px;
+    height: auto;
+    margin: 1rem;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+}
+
+.brand-logo:hover {
+    filter: grayscale(0%);
+}
+
+.guitar-type-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3%;
+}
+
+.guitar-type-card {
+    background: var(--secondary-color);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.guitar-type-card:hover {
+    transform: translateY(-10px);
+}
+
+.guitar-type-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.guitar-type-card h3 {
+    padding: 1rem;
+    text-align: center;
+}
+
+.cta-section {
+    text-align: center;
+    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+    padding: 1rem;
+    /* border-radius: 10px; */
+    color: var(--text-color);
+}
+
+/* Estilos para la vista de sessions/current */
+.rock-session-container {
+    text-align: center;
+    /* padding: 3rem; */
+    /* background: url(/img/rock-background.png) no-repeat center center; */
+    background-size: cover;
+    color: var(--text-color);
+    /* min-height: 100vh; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #000000b3;
+    margin-left: 16%;
+    margin-right: 16%;
+    border: 2px solid red;
+}
+
+.rock-title {
+    font-size: 16rem;
+    font-family: 'Metal Mania', cursive;
+    text-shadow: 0 0 10px var(--primary-color);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.rock-message {
+    font-size: 1.5rem;
+    margin: 2rem 0;
+}
+
+.rock-invitation {
+    font-size: 2.2rem;
+    margin-bottom: 2rem;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 5px var(--primary-color), 0 0 10px var(--primary-color);
+    }
+
+    to {
+        text-shadow: 0 0 20px var(--primary-color), 0 0 30px var(--primary-color);
+    }
+}
+
+.btn-large {
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+}
+
+/* Estilos para la cuadrícula de productos */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3%;
+}
+
+.product-card {
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(255, 65, 54, 0.3);
+}
+
+.product-card img {
+    padding: 8px;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.product-info {
+    padding: 1rem;
+}
+
+.product-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+/* Estilos para la página de detalles del producto */
+.product-details {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.product-content {
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+}
+
+.product-image {
+    flex: 1;
+    text-align: center;
+}
+
+.product-image img {
+    width: 70%;
+    height: auto;
+    border-radius: 15px;
+}
+
+.product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+
+.product-info .price {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.product-info .description {
+    margin-bottom: 1rem;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.product-info .btn {
+    margin-top: 1rem;
+}
+
+.flexSingleG {
+    display: flex;
+}
+
+.featured-brands,
+.guitar-types,
+.cta-section {
+    margin-top: 0px !important;
+    padding-bottom: 2rem;
+    margin-bottom: 0px !important;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 2%;
+}
+
+.noAcc {
+    color: rgb(255, 251, 251);
+    text-shadow: -1px 1px 3px #ff0000;
+}
+
+.noAcc2 {
+    color: #ff5353;
+    text-shadow: -1px 1px 3px #ff0000;
+}
+
+#register-form {
+    font-size: 13px;
+    gap: 8px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #000000b3;
+    margin-left: 30%;
+    margin-right: 30%;
+    border: 2px solid #ff000042;
+    margin-top: 5%;
+}

@@ -1,0 +1,69 @@
+<h1 class="tituloLog">Nuestras Guitarras</h1>
+
+<div class="product-grid">
+    {{#each products}}
+    <div class="product-card">
+        <img src="{{img}}" alt="{{this.name}}">
+        <div class="product-info">
+            <h3>{{this.name}}</h3>
+            <p class="price">${{this.price}}</p>
+            <div class="product-buttons">
+                <a href="/products/{{this._id}}" class="btn btn-secondary">Ver más</a>
+                <button class="btn btn-primary add-to-cart" data-id="{{this._id}}">
+                    <i class="fas fa-shopping-cart"></i> Añadir al carrito
+                </button>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+<div class="pagination">
+    {{#if pagination.hasPrevPage}}
+    <a href="?page={{pagination.prevPage}}&limit=3&sort={{sort}}" class="btn">
+        <i class="fas fa-chevron-left"></i> Anterior
+    </a>
+    {{/if}}
+
+    {{#each pagination.pages}}
+    <a href="?page={{this}}&limit=3&sort={{../sort}}"
+        class="btn {{#if (eq this ../pagination.page)}}active{{/if}}">{{this}}</a>
+    {{/each}}
+
+    {{#if pagination.hasNextPage}}
+    <a href="?page={{pagination.nextPage}}&limit=3&sort={{sort}}" class="btn">
+        Siguiente <i class="fas fa-chevron-right"></i>
+    </a>
+    {{/if}}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', async function() {
+                const productId = this.getAttribute('data-id');
+                try {
+                    const response = await fetch('/api/carts/add', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ productId, quantity: 1 }),
+                    });
+                    if (response.ok) {
+                        await rockAlert.success('¡Producto añadido al carrito! ¡Increíble Elección!');
+                        if (typeof checkAuth === 'function') {
+                            checkAuth(); // Actualiza el contador del carrito si la función existe
+                        }
+                    } else {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || 'Error al añadir al carrito');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    await rockAlert.error(error.message || 'Error al añadir al carrito');
+                }
+            });
+        });
+    });
+</script>

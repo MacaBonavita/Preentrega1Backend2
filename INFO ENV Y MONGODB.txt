@@ -1,0 +1,13 @@
+MONGODB_URI=mongodb+srv://csluduena:coderhouse@cluster0.xa9uk.mongodb.net/GuitarStore
+JWT_SECRET=sEb4$t1áN!-v.Pw
+SESSION_SECRET=J8r!c7F4kQ@9mLp
+PORT=8080
+
+GITHUB_CLIENT_ID=Ov23linDNvQLrpl16YvC
+GITHUB_CLIENT_SECRET=0f1eadc78ce017cf9c0b962282c18f04e6d11a8e
+GITHUB_CALLBACK_URL=http://localhost:8080/api/sessions/github/callback
+
+- Usa "carts" (plural) para las rutas relacionadas con carritos.
+- Usa "products" (plural) para las rutas relacionadas con productos.
+
+

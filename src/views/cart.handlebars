@@ -1,0 +1,132 @@
+<h1 class="tituloLog">Tu Carrito de Compras</h1>
+
+{{#if cartItems.length}}
+    <div class="contenedorProd">
+        <div class="subCont">
+            <div class="cart-items">
+            {{#each cartItems}}
+                <div class="cart-item" data-id="{{this._id}}">
+                    <img src="{{product.img}}" alt="{{this.product.name}}" class="cart-item-image" style="width: 35%; margin-top: 2%;">
+                    <div class="cart-item-details">
+                        <h3>{{product.title}}</h3>
+                        <p class="price">$<span class="item-price">{{this.product.price}}</span></p>
+                        <div class="quantity-control" data-id="{{this._id}}">
+                            <button class="btn btn-sm btn-decrease"><i class="fas fa-minus">-</i></button>
+                            <span class="quantity">{{this.quantity}}</span>
+                            <button class="btn btn-sm btn-increase"><i class="fas fa-plus">+</i></button>
+                        </div>
+                        <button class="btn btn-sm btn-remove" data-id="{{this._id}}">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </button>
+                        <hr class="linea">
+                    </div>
+                </div>
+            {{/each}}
+            </div>
+            <div class="cart-summary">
+                <h3>Total: $<span id="cart-total">0</span></h3>
+                <button class="btn btn-primary btn-checkout">
+                    <i class="fas fa-credit-card"></i> Proceder al pago
+                </button>
+            </div>
+        </div>
+    </div>
+{{else}}
+    <p>Tu carrito está vacío. ¡Agrega algunas guitarras rockeras!</p>
+    <a href="/products" class="btn btn-primary">
+        <i class="fas fa-guitar"></i> Ver productos
+    </a>
+{{/if}}
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const quantityControls = document.querySelectorAll('.quantity-control');
+    const removeButtons = document.querySelectorAll('.btn-remove');
+
+    function updateCartTotal() {
+        const cartItems = document.querySelectorAll('.cart-item');
+        let total = 0;
+        cartItems.forEach(item => {
+            const price = parseFloat(item.querySelector('.item-price').textContent);
+            const quantity = parseInt(item.querySelector('.quantity').textContent);
+            total += price * quantity;
+        });
+        document.getElementById('cart-total').textContent = total.toFixed(2);
+    }
+
+    function updateItemQuantity(itemElement, newQuantity) {
+        const quantitySpan = itemElement.querySelector('.quantity');
+        quantitySpan.textContent = newQuantity;
+        updateCartTotal();
+    }
+
+async function updateQuantity(itemId, change) {
+    try {
+        const itemElement = document.querySelector(`.cart-item[data-id="${itemId}"]`);
+        const quantitySpan = itemElement.querySelector('.quantity');
+        const currentQuantity = parseInt(quantitySpan.textContent);
+        const newQuantity = currentQuantity + change;
+
+        if (newQuantity > 0) {
+            const response = await fetch(`/api/carts/update/${itemId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ quantity: newQuantity })
+            });
+
+            if (response.ok) {
+                quantitySpan.textContent = newQuantity;
+                updateCartTotal();
+            } else {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Error al actualizar la cantidad');
+            }
+        } else {
+            // Si la nueva cantidad es 0 o menos, eliminamos el item
+            await removeItem(itemId);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        await rockAlert.error(error.message);
+    }
+}
+
+async function removeItem(itemId) {
+    const result = await rockAlert.confirm('¿Estás seguro de que quieres eliminar este producto del carrito?');
+    if (result.isConfirmed) {
+        try {
+            const response = await fetch(`/api/carts/remove/${itemId}`, {
+                method: 'DELETE'
+            });
+            if (response.ok) {
+                const itemElement = document.querySelector(`.cart-item[data-id="${itemId}"]`);
+                itemElement.remove();
+                updateCartTotal();
+                await rockAlert.success('¡Producto eliminado del carrito!');
+            } else {
+                throw new Error('Error al eliminar el item');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            await rockAlert.error('Error al eliminar el item');
+        }
+    }
+}
+
+quantityControls.forEach(control => {
+    const decreaseBtn = control.querySelector('.btn-decrease');
+    const increaseBtn = control.querySelector('.btn-increase');
+    const itemId = control.dataset.id;
+
+    decreaseBtn.addEventListener('click', () => updateQuantity(itemId, -1));
+    increaseBtn.addEventListener('click', () => updateQuantity(itemId, 1));
+});
+
+removeButtons.forEach(button => {
+    button.addEventListener('click', () => removeItem(button.dataset.id));
+});
+
+    // Inicializar el total del carrito
+    updateCartTotal();
+});
+</script>

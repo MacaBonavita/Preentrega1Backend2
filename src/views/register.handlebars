@@ -1,0 +1,58 @@
+<div class="auth-container">
+  <h1 class="tituloLog">Registro</h1>
+  <form id="register-form" class="auth-form">
+    <div class="form-group">
+      <label for="first_name"></label>
+      <input type="text" id="first_name" name="first_name" required class="form-control" placeholder="Nombre">
+    </div>
+    <div class="form-group">
+      <label for="last_name"></label>
+      <input type="text" id="last_name" name="last_name" required class="form-control" placeholder="Apellido">
+    </div>
+    <div class="form-group">
+      <label for="email"></label>
+      <input type="email" id="email" name="email" required class="form-control" placeholder="Email">
+    </div>
+    <div class="form-group">
+      <label for="age"></label>
+      <input type="number" id="age" name="age" required class="form-control" placeholder="Edad">
+    </div>
+    <div class="form-group">
+      <label for="password"></label>
+      <input type="password" id="password" name="password" required class="form-control" placeholder="Contraseña">
+    </div>
+    <button type="submit" class="btn btn-primary">Registrarse</button>
+  </form>
+   <p class="noAcc">¿Ya tienes una cuenta?</p> <p class="noAcc2"><a href="/login">Inicia sesión aquí</a></p>
+</div>
+
+<script>
+document.getElementById('register-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = {
+      first_name: document.getElementById('first_name').value,
+      last_name: document.getElementById('last_name').value,
+      email: document.getElementById('email').value,
+      age: document.getElementById('age').value,
+      password: document.getElementById('password').value
+    };
+    try {
+      const response = await fetch('/api/sessions/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        window.location.href = data.redirectUrl;
+      } else {
+        alert(data.message || 'Error en el registro');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error en el registro');
+    }
+  });
+</script>

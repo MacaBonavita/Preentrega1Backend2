@@ -1,0 +1,37 @@
+{
+    "name": "prentrega01",
+    "version": "4.1.0",
+    "type": "module",
+    "description": "prentrega01",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon src/app.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^1.7.7",
+        "bcrypt": "^5.1.1",
+        "connect-mongo": "^5.1.0",
+        "cookie-parser": "^1.4.7",
+        "dotenv": "^16.4.5",
+        "express": "^4.21.1",
+        "express-handlebars": "^7.1.3",
+        "express-session": "^1.18.1",
+        "jsonwebtoken": "^9.0.2",
+        "mongodb": "^6.10.0",
+        "mongoose": "^8.7.2",
+        "mongoose-paginate-v2": "^1.8.5",
+        "nodemailer": "^6.9.15",
+        "passport": "^0.7.0",
+        "passport-github": "^1.1.0",
+        "passport-github2": "^0.1.12",
+        "passport-jwt": "^4.0.1",
+        "passport-local": "^1.0.0",
+        "socket.io": "^4.8.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.4"
+    }
+}

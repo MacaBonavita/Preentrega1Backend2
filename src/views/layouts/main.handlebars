@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guitar Store</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@5/dark.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <img src="/img/banner.png" alt="Guitar Store Logo">
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Inicio</a></li>
+                    <li><a href="/products">Productos</a></li>
+                    <li id="cartLink" style="display: none;">
+                        <a href="/cart">Carrito <span id="cartCount">0</span></a>
+                    </li>
+                    <li id="loginLink"><a href="/login">Iniciar sesión</a></li>
+                    <li id="registerLink"><a href="/register">Registrarse</a></li>
+                    <li id="profileLink" style="display: none;"><a href="/profile">Perfil</a></li>
+                    <li id="logoutLink" style="display: none;"><a href="#" onclick="logout()">Cerrar sesión</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {{{body}}}
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="/img/banner.png" alt="Guitar Store Logo">
+            </div>
+            <div class="footer-links">
+                <a href="/#">Sobre nosotros</a>
+                <a href="/#">Contacto</a>
+                <a href="/#">Términos y condiciones</a>
+            </div>
+            <div class="social-media">
+                <a href="#" class="social-icon">Facebook</a>
+                <a href="#" class="social-icon">Instagram</a>
+                <a href="#" class="social-icon">Twitter</a>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2024 Guitar Store. Todos los derechos reservados.
+        </div>
+    </footer>
+
+    <script src="/js/rockAlerts.js"></script>
+    <script>
+    function checkAuth() {
+        fetch('/api/sessions/user', {
+            method: 'GET',
+            credentials: 'include'
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error('Unauthenticated');
+        })
+        .then(data => {
+            if (data.user) {
+                document.getElementById('cartLink').style.display = 'inline';
+                document.getElementById('profileLink').style.display = 'inline';
+                document.getElementById('logoutLink').style.display = 'inline';
+                document.getElementById('loginLink').style.display = 'none';
+                document.getElementById('registerLink').style.display = 'none';
+                if (data.user.cart) {
+                    updateCartCount(data.user.cart);
+                }
+            } else {
+                throw new Error('Unauthenticated');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('cartLink').style.display = 'none';
+            document.getElementById('profileLink').style.display = 'none';
+            document.getElementById('logoutLink').style.display = 'none';
+            document.getElementById('loginLink').style.display = 'inline';
+            document.getElementById('registerLink').style.display = 'inline';
+        });
+    }
+
+    function updateCartCount(cartId) {
+        fetch(`/api/carts/${cartId}`)
+            .then(response => response.json())
+            .then(data => {
+                const cartCount = data.items ? data.items.reduce((total, item) => total + item.quantity, 0) : 0;
+                document.getElementById('cartCount').textContent = cartCount;
+            })
+            .catch(error => {
+                console.error('Error updating cart count:', error);
+                document.getElementById('cartCount').textContent = '0';
+            });
+    }
+
+    function logout() {
+        fetch('/api/sessions/logout', { method: 'POST' })
+            .then(response => response.json())
+            .then(() => {
+                window.location.href = '/login';
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
+</html>
